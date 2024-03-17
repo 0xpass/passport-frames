@@ -33,6 +33,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
 
     const castDetailsResponse = await fetch(
       `https://api.neynar.com/v2/farcaster/cast?identifier=${castHash}&type=hash`,
+      options,
     );
 
     if (!castDetailsResponse.ok) {
