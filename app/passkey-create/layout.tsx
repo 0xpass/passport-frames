@@ -5,7 +5,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <Suspense>
       <html lang="en">
-        <body>{children}</body>
+        <body className={`bg-black text-white`}>{children}</body>
       </html>
     </Suspense>
   );
