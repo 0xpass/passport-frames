@@ -36,7 +36,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
     );
 
     if (!castDetailsResponse.ok) {
-      throw new Error(`Failed to fetch cast details: ${castDetailsResponse.statusText}`);
+      throw new Error(`Failed to fetch cast details: ${castDetailsResponse}`);
     }
 
     let { data } = await castDetailsResponse.json();
