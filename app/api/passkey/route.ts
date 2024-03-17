@@ -50,8 +50,8 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
     const cast = await castDetailsResponse.json();
     console.log('castDetails', cast);
 
-    const redirect_hash = cast.hash;
-    const redirect_username = cast.author.username;
+    const redirect_hash = cast.cast.hash;
+    const redirect_username = cast.cast.author.username;
 
     const redirectUrl = new URL(`${NEXT_PUBLIC_URL}/passkey-create`);
     redirectUrl.searchParams.append('redirect_hash', redirect_hash);
