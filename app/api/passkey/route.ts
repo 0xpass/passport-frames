@@ -29,13 +29,21 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
     const username = users[0].username;
 
     const castHash = untrustedData.castId.hash;
+    console.log('castHash', castHash);
 
     const castDetailsResponse = await fetch(
       `https://api.neynar.com/v2/farcaster/cast?identifier=${castHash}&type=hash`,
     );
 
     if (!castDetailsResponse.ok) {
-      throw new Error(`Failed to fetch cast details: ${castDetailsResponse}`);
+      let errorMessage = `Failed to fetch cast details: ${castDetailsResponse.statusText}`;
+      try {
+        const errorBody = await castDetailsResponse.json();
+        errorMessage += ` - ${errorBody.message}`;
+      } catch (bodyError) {
+        console.error('Error parsing error response body:', bodyError);
+      }
+      throw new Error(errorMessage);
     }
 
     let { cast, author } = await castDetailsResponse.json();
