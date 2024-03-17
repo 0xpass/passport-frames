@@ -83,10 +83,10 @@ export default function Home() {
         body: JSON.stringify({ username: username, address: address }),
       });
 
-      const redirectShorthash = searchParams.get('redirect_hash');
+      const redirectHash = searchParams.get('redirect_hash');
       const redirectUsername = searchParams.get('redirect_username');
 
-      router.push(`https://warpcast.com/${redirectUsername}/${redirectShorthash}`);
+      router.push(`https://warpcast.com/${redirectUsername}/${redirectHash}`);
     } catch (error) {
       console.error('Error registering:', error);
     } finally {
