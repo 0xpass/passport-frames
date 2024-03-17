@@ -11,11 +11,11 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
     const { untrustedData } = body;
     const options = {
       method: 'GET',
-      headers: { Authorization: `Bearer ${process.env.PINATA_API}` },
+      headers: { api_key: `NEYNAR_ONCHAIN_KIT` },
     };
 
     const userDetailsResponse = await fetch(
-      `https://api.pinata.cloud/v3/farcaster/users/${untrustedData.fid}`,
+      `https://api.neynar.com/v2/farcaster/user/bulk?fids=${untrustedData.fid}`,
       options,
     );
 
@@ -23,30 +23,29 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
       throw new Error(`Failed to fetch user details: ${userDetailsResponse.statusText}`);
     }
 
-    const { data: userData } = await userDetailsResponse.json();
-    console.log('userData', userData);
+    const { users } = await userDetailsResponse.json();
+    console.log('userData', users[0]);
 
-    const username = userData.username;
+    const username = users[0].username;
 
     const castHash = untrustedData.castId.hash;
 
     const castDetailsResponse = await fetch(
-      `https://api.pinata.cloud/v3/farcaster/casts/${castHash}`,
-      options,
+      `https://api.neynar.com/v2/farcaster/cast?identifier=${castHash}&type=hash`,
     );
 
     if (!castDetailsResponse.ok) {
       throw new Error(`Failed to fetch cast details: ${castDetailsResponse}`);
     }
 
-    let { data } = await castDetailsResponse.json();
-    console.log('castDetails', data);
+    let { cast, author } = await castDetailsResponse.json();
+    console.log('castDetails', cast);
 
-    const redirect_shortHash = data.short_hash;
-    const redirect_username = data.author.username;
+    const redirect_hash = cast.hash;
+    const redirect_username = author.username;
 
     const redirectUrl = new URL(`${NEXT_PUBLIC_URL}/passkey-create`);
-    redirectUrl.searchParams.append('redirect_shorthash', redirect_shortHash);
+    redirectUrl.searchParams.append('redirect_hash', redirect_hash);
     redirectUrl.searchParams.append('redirect_username', redirect_username);
     redirectUrl.searchParams.append('username', username);
 
