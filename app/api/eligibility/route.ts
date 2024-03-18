@@ -67,6 +67,11 @@ export async function POST(req: Request) {
             label: 'Create Passkey',
             target: `${NEXT_PUBLIC_URL}/api/passkey`,
           },
+          {
+            action: 'post',
+            label: 'Check Eligbility',
+            target: `${NEXT_PUBLIC_URL}/api/eligibility`,
+          },
         ],
         image: {
           src: `${NEXT_PUBLIC_URL}/not-eligible.png`,
