@@ -33,17 +33,17 @@ export async function POST(req: Request) {
   const liked = message?.liked;
   const recasted = message?.recasted;
 
-  const userInChannelResponse = await fetch(
-    `https://api.neynar.com/v2/farcaster/channel/user?fid=${untrustedData.fid}`,
+  const usersInChannelResponse = await fetch(
+    `https://api.neynar.com/v2/farcaster/channel/followers?id=0xpass&limit=300`,
     options,
   );
 
-  if (!userInChannelResponse.ok) {
-    throw new Error(`Failed to fetch user details: ${userInChannelResponse.statusText}`);
+  if (!usersInChannelResponse.ok) {
+    throw new Error(`Failed to fetch user details: ${usersInChannelResponse.statusText}`);
   }
 
-  const { channels } = await userInChannelResponse.json();
-  const inChannel = channels.some((channel: any) => channel.id === '0xpass');
+  const { users: usersInChannel } = await usersInChannelResponse.json();
+  const inChannel = usersInChannel.some((user: any) => user.fid === untrustedData.fid);
 
   const eligible = liked && recasted && address && inChannel;
 
