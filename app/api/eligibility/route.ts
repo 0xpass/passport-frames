@@ -12,15 +12,22 @@ export async function POST(req: Request) {
   }
 
   const { untrustedData } = body;
-  const options = { method: 'GET', headers: { Authorization: `Bearer ${process.env.PINATA_API}` } };
+  const options = {
+    method: 'GET',
+    headers: { api_key: `NEYNAR_ONCHAIN_KIT` },
+  };
 
-  const userDetails = await fetch(
-    `https://api.pinata.cloud/v3/farcaster/users/${untrustedData.fid}`,
+  const userDetailsResponse = await fetch(
+    `https://api.neynar.com/v2/farcaster/user/bulk?fids=${untrustedData.fid}`,
     options,
   );
-  const { data: userData } = await userDetails.json();
 
-  const username = userData.username;
+  if (!userDetailsResponse.ok) {
+    throw new Error(`Failed to fetch user details: ${userDetailsResponse.statusText}`);
+  }
+
+  const { users } = await userDetailsResponse.json();
+  const username = users[0].username;
 
   const address = await kv.get(`user:${username}`);
   const liked = message?.liked;
