@@ -7,6 +7,11 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
     const body: FrameRequest = await req.json();
 
     console.log(body);
+    const { isValid } = await getFrameMessage(body, { neynarApiKey: 'NEYNAR_ONCHAIN_KIT' });
+
+    if (!isValid) {
+      throw new Error('Invalid frame request');
+    }
 
     const { untrustedData } = body;
     const options = {

@@ -60,7 +60,7 @@ export default function Home() {
     } catch (error: any) {
       console.error('Error registering:', error);
       if (error.message.includes('Duplicate registration')) {
-        setDuplicateError(true);
+        await authenticate();
         return;
       }
       enqueueSnackbar(`Error registering: ${error}`, { variant: 'error' });
