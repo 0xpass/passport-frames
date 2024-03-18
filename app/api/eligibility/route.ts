@@ -33,7 +33,23 @@ export async function POST(req: Request) {
   const liked = message?.liked;
   const recasted = message?.recasted;
 
-  if (address && liked && recasted) {
+  const userInChannelResponse = await fetch(
+    `https://api.neynar.com/v2/farcaster/channel/user?fid=${untrustedData.fid}`,
+    options,
+  );
+
+  if (!userInChannelResponse.ok) {
+    throw new Error(`Failed to fetch user details: ${userInChannelResponse.statusText}`);
+  }
+
+  const { channels } = await userInChannelResponse.json();
+  const inChannel = channels.some((channel: any) => channel.id === '0xpass');
+
+  const eligible = liked && recasted && address && inChannel;
+
+  if (eligible) {
+    await kv.set(`eligiblity:${username}`, true);
+
     return new NextResponse(
       getFrameHtmlResponse({
         image: {
