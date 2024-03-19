@@ -103,7 +103,7 @@ export default function Home() {
         </p>
         <p className="max-w-[40ch] leading-7 mt-8 italic">
           Disclaimer: These wallets are created on the passport testnet. Please do not send funds
-          you are not to lose.
+          you are not willing to lose.
         </p>
       </div>
 

@@ -55,7 +55,7 @@ export async function POST(req: Request) {
         buttons: [
           {
             action: 'link',
-            label: 'See Wallet in Etherscan',
+            label: 'See Wallet on Etherscan',
             target: `https://etherscan.io/address/${address}`,
           },
         ],
