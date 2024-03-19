@@ -53,7 +53,7 @@ export async function POST(req: Request) {
     return new NextResponse(
       getFrameHtmlResponse({
         image: {
-          src: `${NEXT_PUBLIC_URL}/eligible.png`,
+          src: `https://dynamic-image.vercel.app/api/generate/html/yellowish-yellow.html?title=You%20are%20eligible%20your%20passport%20wallet%20address%20is%20below&content=${address}`,
           aspectRatio: '1.91:1',
         },
       }),
