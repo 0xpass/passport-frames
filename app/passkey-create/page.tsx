@@ -101,6 +101,10 @@ export default function Home() {
         <p className="max-w-[40ch] leading-7 mt-8">
           Make a passport wallet with your farcaster account, for a chance to win some $DEGEN
         </p>
+        <p className="max-w-[40ch] leading-7 mt-8 italic">
+          Disclaimer: These wallets are created on the passport testnet. Please do not send funds
+          you are not to lose.
+        </p>
       </div>
 
       <div className="flex space-y-5 flex-col items-center max-w-xl mx-auto mt-16">
