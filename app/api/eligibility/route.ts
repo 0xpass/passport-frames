@@ -52,6 +52,13 @@ export async function POST(req: Request) {
 
     return new NextResponse(
       getFrameHtmlResponse({
+        buttons: [
+          {
+            action: 'link',
+            label: 'See Wallet in Etherscan',
+            target: `https://etherscan.io/address/${address}`,
+          },
+        ],
         image: {
           src: `https://dynamic-image.vercel.app/api/generate/png/persian-blue.png?title=You%27re%20Eligible%21&content=Wallet%20Address%3A%20${address}&ref=website`,
           aspectRatio: '1.91:1',
