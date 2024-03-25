@@ -92,8 +92,19 @@ export default function Home() {
         serializedTransaction: signedTransaction,
       });
 
-      enqueueSnackbar(`See your transaction on Basescan, https://basescan.org/tx/${hash}`, {
-        variant: 'success',
+      enqueueSnackbar('', {
+        content: () => (
+          <div className="p-4 bg-[#20242A] text-white rounded-lg text-sm">
+            ⚡️ Transaction submitted successfully <br />
+            <a
+              target="_blank"
+              className="ml-5 text-[#cfc2a1]"
+              href={`https://basecan.org/tx/${hash}`}
+            >
+              Click here to see on a block explorer
+            </a>
+          </div>
+        ),
       });
     } catch (error) {
       console.error('Error transferring tokens:', error);
