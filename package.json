@@ -12,6 +12,7 @@
   "license": "MIT",
   "dependencies": {
     "@0xpass/passport": "^0.1.14",
+    "@0xpass/passport-viem": "^0.0.8",
     "@0xpass/webauthn-signer": "^0.0.3",
     "@coinbase/onchainkit": "0.10.1",
     "@vercel/kv": "^1.0.1",
@@ -19,7 +20,7 @@
     "notistack": "^3.0.1",
     "react": "latest",
     "react-dom": "latest",
-    "viem": "^2.7.1"
+    "viem": "^1.16.6"
   },
   "devDependencies": {
     "@types/node": "latest",
