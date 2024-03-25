@@ -4,9 +4,8 @@ import { usePassport } from '../hooks/usePassports';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { enqueueSnackbar } from 'notistack';
 import { createPassportClient } from '@0xpass/passport-viem';
-import { base, mainnet } from 'viem/chains';
+import { base } from 'viem/chains';
 import { http, WalletClient } from 'viem';
-import erc20Abi from '../erc20Abi.json';
 
 export default function Home() {
   const [username, setUsername] = useState('');
