@@ -14,6 +14,7 @@ export default function Home() {
   const [authenticatedHeader, setAuthenticatedHeader] = useState({});
   const [addressToTransfer, setAddressToTransfer] = useState('');
   const [transferring, setTransferring] = useState(false);
+  const [confirmState, setConfirmState] = useState(false);
 
   const endpoint = process.env.NEXT_PUBLIC_ENDPOINT;
   const enclavePublicKey = process.env.NEXT_PUBLIC_ENCLAVE_PUBLIC_KEY;
@@ -134,6 +135,10 @@ export default function Home() {
             className="flex flex-col items-stretch space-y-8 w-full"
             onSubmit={async (e) => {
               e.preventDefault();
+              if (!confirmState) {
+                setConfirmState(true);
+                return;
+              }
               await transferDegen(addressToTransfer as `0x${string}`);
             }}
           >
@@ -153,7 +158,11 @@ export default function Home() {
                   type="submit"
                   disabled={transferring}
                 >
-                  {transferring ? 'Transferring...' : 'Transfer $DEGEN'}
+                  {confirmState
+                    ? transferring
+                      ? 'Transferring...'
+                      : 'Confirm Transfer'
+                    : 'Transfer $DEGEN'}
                 </button>
               </div>
             </div>
