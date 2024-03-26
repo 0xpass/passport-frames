@@ -13,6 +13,7 @@ export default function Home() {
   const [authenticated, setAuthenticated] = useState(false);
   const [authenticatedHeader, setAuthenticatedHeader] = useState({});
   const [addressToTransfer, setAddressToTransfer] = useState('');
+  const [transferring, setTransferring] = useState(false);
 
   const endpoint = process.env.NEXT_PUBLIC_ENDPOINT;
   const enclavePublicKey = process.env.NEXT_PUBLIC_ENCLAVE_PUBLIC_KEY;
@@ -64,7 +65,9 @@ export default function Home() {
   }
 
   async function transferDegen(address: `0x${string}`) {
+    setTransferring(true);
     const client: WalletClient = createWalletClient();
+    const [account] = await client.getAddresses();
     const tokenAddress = '0x4ed4e862860bed51a9570b96d89af5e1b0efefed';
 
     /// 166000000000000000000 / 1e18 = 166
@@ -81,7 +84,7 @@ export default function Home() {
 
       const transaction = await client.prepareTransactionRequest({
         data: data,
-        account: address,
+        account: account,
         to: tokenAddress,
         chain: base,
       });
@@ -91,6 +94,8 @@ export default function Home() {
       const hash = await client.sendRawTransaction({
         serializedTransaction: signedTransaction,
       });
+
+      console.log(hash);
 
       enqueueSnackbar('', {
         content: () => (
@@ -108,7 +113,9 @@ export default function Home() {
       });
     } catch (error) {
       console.error('Error transferring tokens:', error);
-      enqueueSnackbar(`Error transferring tokens: ${error}`, { variant: 'error' });
+      enqueueSnackbar(`Error: ${error}`, { variant: 'error' });
+    } finally {
+      setTransferring(false);
     }
   }
 
@@ -116,7 +123,9 @@ export default function Home() {
     <>
       <div className="p-12">
         <h1 className="text-6xl font-bold">Passport Frames</h1>
-        <p className="max-w-[40ch] leading-7 mt-8">Authenticate and claim / transfer your $DEGEN</p>
+        <p className="max-w-[40ch] leading-7 mt-8">
+          Authenticate and Transfer your $DEGEN balance to another wallet
+        </p>
       </div>
 
       {authenticated ? (
@@ -142,9 +151,9 @@ export default function Home() {
                 <button
                   className="w-4/6 border border-1 rounded p-3 cursor-pointer"
                   type="submit"
-                  disabled={authenticating || username.length === 0}
+                  disabled={transferring}
                 >
-                  Transfer $DEGEN
+                  {transferring ? 'Transferring...' : 'Transfer $DEGEN'}
                 </button>
               </div>
             </div>

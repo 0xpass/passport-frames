@@ -1,9 +1,12 @@
 import './globals.css';
+import { Providers } from './providers';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`bg-black text-white`}>{children}</body>
+      <Providers>
+        <body className={`bg-black text-white`}>{children}</body>
+      </Providers>
     </html>
   );
 }
