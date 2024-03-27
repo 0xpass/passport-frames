@@ -28,7 +28,7 @@ export async function POST(req: Request) {
   const { users } = await userDetailsResponse.json();
   const username = users[0].username;
 
-  if (['jimbo00007', 'tombornal', 'limone.eth', 'kxo'].includes(username)) {
+  if (['jimbo00007', 'tombornal', 'limone.eth'].includes(username)) {
     return new NextResponse(
       getFrameHtmlResponse({
         buttons: [
