@@ -5,18 +5,13 @@ import { NEXT_PUBLIC_URL } from '../config';
 const frameMetadata = getFrameMetadata({
   buttons: [
     {
-      action: 'post_redirect',
-      label: 'See Wallet on Basescan',
-      target: `${NEXT_PUBLIC_URL}/api/redirect_to_basescan`,
-    },
-    {
-      action: 'post_redirect',
-      label: 'Transfer $DEGEN',
-      target: `${NEXT_PUBLIC_URL}/api/redirect_to_transfer`,
+      action: 'post',
+      label: 'Click to check if you are a winner',
+      target: `${NEXT_PUBLIC_URL}/api/check_if_winner`,
     },
   ],
   image: {
-    src: `${NEXT_PUBLIC_URL}/congrats.png`,
+    src: `${NEXT_PUBLIC_URL}/check-if-winner.png`,
     aspectRatio: '1.91:1',
   },
 });
@@ -27,7 +22,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Passport Protocol',
     description: 'LFG',
-    images: [`${NEXT_PUBLIC_URL}/congrats.png`],
+    images: [`${NEXT_PUBLIC_URL}/check-if-winner.png`],
   },
   other: {
     ...frameMetadata,
