@@ -71,8 +71,8 @@ export default function Home() {
     const [account] = await client.getAddresses();
     const tokenAddress = '0x4ed4e862860bed51a9570b96d89af5e1b0efefed';
 
-    /// 166000000000000000000000 / 1e18 = 166k
-    const amount = '166000000000000000000000';
+    /// 160000000000000000000000 / 1e18 = 160k
+    const amount = '160000000000000000000000';
 
     try {
       const methodSignature = 'a9059cbb'; // 4 bytes of hash "transfer(address,uint256)" function signature
